@@ -122,6 +122,7 @@ public class PostFinderImpl implements MyPostFinder {
     public Mono<ListResult<MyListedPostVo>> listByCategoryAndChildren(@Nullable Integer page,
         @Nullable Integer size,
         String categoryName){
+        System.out.println("listByCategoryAndChildren!!!!");
         CategoryTreeVo categoryTreeVo = categoryFinder.getTreeByNameChild(categoryName);
 
         List<String> result = new ArrayList<>();
@@ -135,8 +136,7 @@ public class PostFinderImpl implements MyPostFinder {
 
         Predicate<Post> predicate = FIXED_PREDICATE
             .and(postPredicate == null ? post -> true : postPredicate);
-
-        return client.list(Post.class, predicate,
+        Mono<ListResult<MyListedPostVo>> listResultMono = client.list(Post.class, predicate,
                 comparator, pageNullSafe(page), sizeNullSafe(size))
             .flatMap(list -> Flux.fromStream(list.get())
                 .concatMap(post -> convertToListedPostVo(post)
@@ -150,6 +150,8 @@ public class PostFinderImpl implements MyPostFinder {
                 )
             )
             .defaultIfEmpty(new ListResult<>(page, size, 0L, List.of()));
+        System.out.println("ok!!!!!!!!");
+        return listResultMono;
     }
 
 

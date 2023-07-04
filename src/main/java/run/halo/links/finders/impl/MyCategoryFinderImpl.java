@@ -139,7 +139,7 @@ public class MyCategoryFinderImpl implements MyCategoryFinder {
         List<CategoryTreeVo> path = new ArrayList<>();
 
         Mono<List<CategoryTreeVo>> listMono = categoryTreeVoFlux.collectList();
-        findPathToTopParent(listMono, targetname, path);
+        // findPathToTopParent(listMono, targetname, path);
         Collections.reverse(path);
         Mono<List<CategoryTreeVo>> just = Mono.just(path);
         return just;
@@ -175,7 +175,7 @@ public class MyCategoryFinderImpl implements MyCategoryFinder {
         List<CategoryTreeVo> path = new ArrayList<>();
 
         Mono<List<CategoryTreeVo>> listMono = categoryTreeVoFlux.collectList();
-        findPathToTopParent(listMono, targetname, path);
+        // findPathToTopParent(listMono, targetname, path);
 
         for(CategoryTreeVo p:path){
             if(p.getMetadata().getName().equals(targetname)){
